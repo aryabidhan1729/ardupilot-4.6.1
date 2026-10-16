@@ -73,6 +73,10 @@ public:
 #if AP_CAMERA_SCRIPTING_ENABLED
         SCRIPTING = 7,  // Scripting backend
 #endif
+//Custom camera
+#if AP_CAMERA_P6UC_ENABLED
+        P6UC = 100,     // P6-UC thermal camera over UART (custom)
+#endif
     };
 
     // detect and initialise backends
@@ -262,6 +266,11 @@ private:
     bool _is_in_auto_mode;              // true if in AUTO mode
     uint32_t log_camera_bit;            // logging bit (from LOG_BITMASK) to enable camera logging
     AP_Camera_Backend *_backends[AP_CAMERA_MAX_INSTANCES];  // pointers to instantiated backends
+
+#if AP_CAMERA_P6UC_ENABLED
+    // var_info tables of backends that have their own parameters (EACC custom)
+    static const struct AP_Param::GroupInfo *backend_var_info[AP_CAMERA_MAX_INSTANCES];
+#endif
 };
 
 namespace AP {
